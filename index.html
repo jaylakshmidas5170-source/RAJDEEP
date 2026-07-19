@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Run - Retro 2D Dino Game</title>
+    <meta name="description" content="A premium 2D side-scrolling jump game themed around Minecraft, featuring a custom character block, obstacles, and retro sound effects.">
+    <!-- Google Fonts for Pixel and Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Game Header -->
+        <header id="game-header">
+            <h1 class="pixel-text animate-glow">MINECRAFT RUN</h1>
+            <div class="hud-stats">
+                <div class="hud-badge" id="difficulty-badge">NORMAL</div>
+                <div class="hud-badge score-badge">
+                    <span>SCORE: </span><span id="live-score">00000</span>
+                </div>
+                <div class="hud-badge hi-score-badge">
+                    <span>HI: </span><span id="high-score">00000</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Game Area -->
+        <main id="game-viewport">
+            <!-- Game Canvas -->
+            <canvas id="game-canvas" width="960" height="400"></canvas>
+
+            <!-- Screen Overlay: Start Screen -->
+            <div id="start-overlay" class="overlay active">
+                <div class="overlay-content">
+                    <h2 class="pixel-text overlay-title text-bounce">READY TO RUN?</h2>
+                    
+                    <div class="avatar-preview-container">
+                        <div class="avatar-card">
+                            <img src="assets/player.jpg" alt="Player Character" id="player-preview-img">
+                            <div class="pixel-text avatar-label">YOU</div>
+                        </div>
+                    </div>
+                    
+                    <p class="instruction-text">Jump over TNT blocks and dodge flying Ghasts!</p>
+                    
+                    <div class="menu-actions">
+                        <button id="start-btn" class="pixel-btn btn-primary">START RUN</button>
+                        <button id="settings-toggle-btn" class="pixel-btn btn-secondary">SETTINGS</button>
+                    </div>
+                    
+                    <div class="control-hints">
+                        <div class="hint"><span class="key">SPACE</span> / <span class="key">↑</span> Jump</div>
+                        <div class="hint"><span class="key">↓</span> Duck</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen Overlay: Game Over Screen -->
+            <div id="gameover-overlay" class="overlay">
+                <div class="overlay-content">
+                    <h2 class="pixel-text overlay-title danger-text animate-pulse">YOU DIED!</h2>
+                    
+                    <div class="stats-summary">
+                        <div class="stat-row">
+                            <span class="stat-label">Final Score:</span>
+                            <span class="stat-value pixel-text" id="final-score">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">High Score:</span>
+                            <span class="stat-value pixel-text text-gold" id="final-high-score">0</span>
+                        </div>
+                        <div class="stat-row" id="new-high-score-announcement" style="display: none;">
+                            <span class="pixel-text text-flash">★ NEW HIGH SCORE! ★</span>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-actions">
+                        <button id="respawn-btn" class="pixel-btn btn-primary animate-wiggle">RESPAWN</button>
+                        <button id="main-menu-btn" class="pixel-btn btn-secondary">MAIN MENU</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen Overlay: Settings Modal -->
+            <div id="settings-overlay" class="overlay">
+                <div class="overlay-content modal-content">
+                    <h2 class="pixel-text overlay-title">SETTINGS</h2>
+                    
+                    <div class="settings-form">
+                        <div class="setting-row">
+                            <label for="difficulty-select">Difficulty</label>
+                            <select id="difficulty-select" class="pixel-select">
+                                <option value="easy">Easy (Peaceful)</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="hard">Hardcore</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-row">
+                            <label for="sound-toggle">Sound Effects</label>
+                            <label class="switch">
+                                <input type="checkbox" id="sound-toggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-row">
+                            <label for="particles-toggle">Visual Particles</label>
+                            <label class="switch">
+                                <input type="checkbox" id="particles-toggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-actions">
+                        <button id="settings-save-btn" class="pixel-btn btn-primary">SAVE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- In-game HUD: Power-up Status bar -->
+            <div id="powerup-hud" class="hud-powerup" style="display: none;">
+                <div class="hud-powerup-icon">🍎</div>
+                <div class="hud-powerup-bar-container">
+                    <div class="hud-powerup-label pixel-text">GOLDEN APPLE</div>
+                    <div class="hud-powerup-progress" id="powerup-progress" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- In-game HUD: Heart Container -->
+            <div id="health-hud" class="hud-health">
+                <span class="heart animate-beat">❤️</span>
+                <span class="heart animate-beat">❤️</span>
+                <span class="heart animate-beat">❤️</span>
+            </div>
+        </main>
+
+        <!-- Footer / Credits -->
+        <footer id="game-footer">
+            <p>Designed with premium aesthetics. Press <kbd>ESC</kbd> to pause / toggle settings.</p>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
